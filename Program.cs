@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
+using Game_Chess.Chess.GUI;
 
 namespace Game_Chess {
     static class Program {
@@ -12,7 +11,7 @@ namespace Game_Chess {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Chess.GUI.GUI());
+            Application.Run(new GUI());
         }
     }
 }

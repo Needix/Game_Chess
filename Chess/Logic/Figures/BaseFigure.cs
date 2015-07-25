@@ -1,10 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Game_Chess.Chess.Logic.Figures {
-    abstract class BaseFigure {
+    public abstract class BaseFigure {
+        public enum Files {
+            A = 0,
+            B = 1,
+            C = 2,
+            D = 3,
+            E = 4,
+            F = 5,
+            G = 6,
+            H = 7
+        }
 
         public int X { get; set; }
         public int Y { get; set; }
@@ -19,5 +26,8 @@ namespace Game_Chess.Chess.Logic.Figures {
             this._team = team;
             this.Name = name;
         }
+
+        public Boolean ChangePosition(int deltaX, int deltaY) { return MoveTo(X + deltaX, Y + deltaY); }
+        public abstract Boolean MoveTo(int x, int y);
     }
 }

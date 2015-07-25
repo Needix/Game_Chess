@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chess\GUI\GamePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Chess\GUI\GUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -52,11 +55,20 @@
     </Compile>
     <Compile Include="Chess\Logic\Field.cs" />
     <Compile Include="Chess\Logic\Figures\BaseFigure.cs" />
+    <Compile Include="Chess\Logic\Figures\Bishop.cs" />
+    <Compile Include="Chess\Logic\Figures\King.cs" />
+    <Compile Include="Chess\Logic\Figures\Knight.cs" />
+    <Compile Include="Chess\Logic\Figures\Pawn.cs" />
+    <Compile Include="Chess\Logic\Figures\Queen.cs" />
+    <Compile Include="Chess\Logic\Figures\Rook.cs" />
     <Compile Include="Chess\Logic\GameLogic.cs" />
     <Compile Include="Chess\Logic\Player.cs" />
     <Compile Include="Chess\Logic\Serialization.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Chess\GUI\GUI.resx">
+      <DependentUpon>GUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

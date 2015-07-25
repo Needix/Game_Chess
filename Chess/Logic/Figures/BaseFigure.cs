@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game_Chess.Chess.Logic.Figures {
     public abstract class BaseFigure {
@@ -26,6 +27,8 @@ namespace Game_Chess.Chess.Logic.Figures {
             this._team = team;
             this.Name = name;
         }
+
+        public abstract List<Point> NextMovements(BaseFigure[,] grid, bool inclusiveAttackMoves);
 
         public Boolean ChangePosition(int deltaX, int deltaY) { return MoveTo(X + deltaX, Y + deltaY); }
         public abstract Boolean MoveTo(int x, int y);

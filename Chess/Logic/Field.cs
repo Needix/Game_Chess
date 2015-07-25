@@ -3,6 +3,10 @@ using Game_Chess.Chess.Logic.Figures;
 
 namespace Game_Chess.Chess.Logic {
     class Field {
+        public Field(BaseFigure figure) {
+            this.Figure = figure;
+        }
+
         /// <summary>
         /// Figure on this field, null if empty
         /// </summary>

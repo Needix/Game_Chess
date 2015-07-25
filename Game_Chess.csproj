@@ -64,6 +64,7 @@
     <Compile Include="Chess\Logic\GameLogic.cs" />
     <Compile Include="Chess\Logic\Player.cs" />
     <Compile Include="Chess\Logic\Serialization.cs" />
+    <Compile Include="Chess\Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Chess\GUI\GUI.resx">

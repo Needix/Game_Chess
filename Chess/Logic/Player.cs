@@ -25,36 +25,13 @@ namespace Game_Chess.Chess.Logic {
             this._name = name;
             this._team = team;
 
-            InitFigures();
+            RegisterFigures();
         }
 
-        private void InitFigures() {
-            if (Team == Teams.TeamWhite) {
-                _figures.Add(new Rook(0, 0, Team));
-                _figures.Add(new Knight(1, 0, Team));
-                _figures.Add(new Bishop(2, 0, Team));
-                _figures.Add(new Queen(3, 0, Team));
-                _figures.Add(new King(4, 0, Team));
-                _figures.Add(new Bishop(5, 0, Team));
-                _figures.Add(new Knight(6, 0, Team));
-                _figures.Add(new Rook(7, 0, Team));
-
-                for(int i = 0; i < 8; i++) {
-                    _figures.Add(new Pawn(i, 1, Team));   
-                }
-            } else {
-                _figures.Add(new Rook(0, 7, Team));
-                _figures.Add(new Knight(1, 7, Team));
-                _figures.Add(new Bishop(2, 7, Team));
-                _figures.Add(new Queen(3, 7, Team));
-                _figures.Add(new King(4, 7, Team));
-                _figures.Add(new Bishop(5, 7, Team));
-                _figures.Add(new Knight(6, 7, Team));
-                _figures.Add(new Rook(7, 7, Team));
-
-                for(int i = 0; i < 8; i++) {
-                    _figures.Add(new Pawn(i, 6, Team));
-                }
+        private void RegisterFigures() {
+            List<BaseFigure> figures = GameLogic.GetInstance.GridFigures;
+            foreach (BaseFigure curFigure in figures) {
+                if(curFigure.Team == _team) _figures.Add(curFigure);
             }
         }
 

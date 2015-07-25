@@ -17,6 +17,9 @@ namespace Game_Chess.Chess.GUI {
         private readonly Color WHITE_COLOR = Color.FromArgb(255,206,158);
         private readonly Color BLACK_COLOR = Color.FromArgb(209, 139, 71);
 
+        private int xPerField;
+        private int yPerField;
+
         private readonly Thread _redrawThread;
 
         private readonly GameLogic _logic;
@@ -30,7 +33,12 @@ namespace Game_Chess.Chess.GUI {
             _redrawThread.Name = "RedrawThread";
             _redrawThread.Start();
 
+            xPerField = Width / GameLogic.GRID_SIZE; 
+            yPerField = Height / GameLogic.GRID_SIZE;
+
             DrawChess = true;
+
+            this.MouseClick += _logic.MouseClick;
         }
 
         private void RedrawThread() {
@@ -53,17 +61,22 @@ namespace Game_Chess.Chess.GUI {
 
             if (!DrawChess) return;
             DrawGamePieces(g);
-            DrawMoves(g);
+            DrawSelected(g);
             DrawCheckmate(g);
             DrawFigures(g);
+        }
+
+        protected override void OnResize(EventArgs e) {
+            base.OnResize(e);
+
+            xPerField = Width / GameLogic.GRID_SIZE;
+            yPerField = Height / GameLogic.GRID_SIZE;
         }
 
         private void DrawGamePieces(Graphics g) {
             Brush whiteBrush = new SolidBrush(WHITE_COLOR);
             Brush blackBrush = new SolidBrush(BLACK_COLOR);
             Brush curBrush = whiteBrush;
-            int xPerField = Width / GameLogic.GRID_SIZE;
-            int yPerField = Height / GameLogic.GRID_SIZE;
 
             int curY = 0;
             for(int y = 0; y < GameLogic.GRID_SIZE; y++) {
@@ -79,8 +92,19 @@ namespace Game_Chess.Chess.GUI {
             }
         }
 
-        private void DrawMoves(Graphics g) {
-            
+        private void DrawSelected(Graphics g) {
+            Field f = _logic.SelectedField;
+            if (f == null) return;
+
+            Brush brush = new SolidBrush(Color.Red);
+            g.FillRectangle(brush, f.Figure.X*xPerField, f.Figure.Y*yPerField, xPerField, yPerField);
+
+            brush = new SolidBrush(Color.Yellow);
+            //TODO Save NextMovements so it doesnt get calculated every frame
+            List<Point> possibleMoves = f.Figure.NextMovements(_logic.ConvertGameGridToBaseFigureGrid(), true);
+            foreach (Point curPoint in possibleMoves) {
+                g.FillRectangle(brush,curPoint.X*xPerField, curPoint.Y*yPerField, xPerField, yPerField);   
+            }
         }
 
         private void DrawCheckmate(Graphics g) {
@@ -88,21 +112,16 @@ namespace Game_Chess.Chess.GUI {
         }
 
         private void DrawFigures(Graphics g) {
-            int xPerField = Width / GameLogic.GRID_SIZE;
-            int yPerField = Height / GameLogic.GRID_SIZE;
             Font font = new Font("Arial", 20);
 
-            Player[] players = _logic.Player;
-            foreach (Player curPlayer in players) {
-                List<BaseFigure> figures = curPlayer.Figures;
-                foreach (BaseFigure figure in figures) {
-                    int x = figure.X*xPerField;
-                    int y = figure.Y*yPerField;
-                    Color color = figure.Team == Player.Teams.TeamWhite ? Color.White : Color.Black;
-                    Brush brush = new SolidBrush(color);
+            List<BaseFigure> figures = _logic.GridFigures;
+            foreach(BaseFigure figure in figures) {
+                int x = figure.X * xPerField;
+                int y = figure.Y * yPerField;
+                Color color = figure.Team == Player.Teams.TeamWhite ? Color.White : Color.Black;
+                Brush brush = new SolidBrush(color);
 
-                    g.DrawString(figure.Name, font, brush, x, y);
-                }
+                g.DrawString(figure.Name, font, brush, x, y);
             }
         }
     }

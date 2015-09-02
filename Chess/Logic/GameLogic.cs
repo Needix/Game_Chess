@@ -96,6 +96,8 @@ namespace Game_Chess.Chess.Logic {
             int fieldY = e.Location.Y / yPerField;
             if (fieldX >= GRID_SIZE || fieldY >= GRID_SIZE) return;
 
+            CalculateNextMovements();
+
             Field newField = _gameGrid[fieldX, fieldY];
             BaseFigure newFigure = newField.Figure;
             bool movementSuccessfull = TryMovement(newField);
@@ -110,9 +112,28 @@ namespace Game_Chess.Chess.Logic {
         }
 
         private void CalculateNextMovements() {
-            foreach (BaseFigure curFigure in GridFigures) {
-                
+            for (int y = 0; y < GRID_SIZE; y++) {
+                for (int x = 0; x < GRID_SIZE; x++) {
+                    Field curField = GameGrid[x, y];
+                    curField.ClearPossibleMoves();
+                }
             }
+
+            BaseFigure[,] baseGrid = ConvertGameGridToBaseFigureGrid();
+            foreach (BaseFigure curFigure in GridFigures) {
+                List<Point> pointList = curFigure.NextMovements(baseGrid, true);
+                curFigure.PossibleMovements = pointList;
+                foreach (Point curPoint in pointList) {
+                    GameGrid[curPoint.X, curPoint.Y].PossibleMoves.Add(curFigure);
+                }
+            }
+        }
+
+        private bool TryMovement(Field newField) {
+            BaseFigure newFigure = newField.Figure;
+            if(SelectedField == null) return false;
+            //TODO Finish TryMovement
+            return false;
         }
 
         public BaseFigure[,] ConvertGameGridToBaseFigureGrid() {
@@ -123,13 +144,6 @@ namespace Game_Chess.Chess.Logic {
                 }
             }
             return resultGrid;
-        }
-
-        private bool TryMovement(Field newField) {
-            BaseFigure newFigure = newField.Figure;
-            if (SelectedField == null) return false;
-            //TODO Finish TryMovement
-            return false;
         }
     }
 }

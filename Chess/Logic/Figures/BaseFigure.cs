@@ -21,6 +21,8 @@ namespace Game_Chess.Chess.Logic.Figures {
         private readonly Player.Teams _team;
         public Player.Teams Team { get { return _team; } }
 
+        public List<Point> PossibleMovements { get; set; } 
+
         protected BaseFigure(int x, int y, String name, Player.Teams team) {
             this.X = x;
             this.Y = y;

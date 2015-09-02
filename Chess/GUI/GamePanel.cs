@@ -100,8 +100,7 @@ namespace Game_Chess.Chess.GUI {
             g.FillRectangle(brush, f.Figure.X*xPerField, f.Figure.Y*yPerField, xPerField, yPerField);
 
             brush = new SolidBrush(Color.Yellow);
-            //TODO Save NextMovements so it doesnt get calculated every frame
-            List<Point> possibleMoves = f.Figure.NextMovements(_logic.ConvertGameGridToBaseFigureGrid(), true);
+            List<Point> possibleMoves = f.Figure.PossibleMovements;
             foreach (Point curPoint in possibleMoves) {
                 g.FillRectangle(brush,curPoint.X*xPerField, curPoint.Y*yPerField, xPerField, yPerField);   
             }

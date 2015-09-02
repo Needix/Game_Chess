@@ -16,5 +16,9 @@ namespace Game_Chess.Chess.Logic {
         /// List of figures that can move on this field in next move
         /// </summary>
         public List<BaseFigure> PossibleMoves { get; set; }
+
+        public void ClearPossibleMoves() {
+            PossibleMoves = new List<BaseFigure>();
+        } 
     }
 }
